@@ -1,0 +1,198 @@
+body{
+  
+  padding-top: 20px;
+}
+.rowStyle{
+  display: flex
+}
+
+.squareStyle{
+  width:130px;
+  height:130px;
+  background-color: #ddd;
+  margin: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+
+.boardStyle {
+  background-color: #eee;
+  width: 500px;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  border: 3px #eee solid
+}
+
+.containerStyle {
+  display: flex;
+  align-items: center;
+  flex-direction: column
+}
+
+.instructionsStyle{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.buttonStyle{
+  margin-top: 15px;
+  margin-bottom: 16px;
+  width: 80px;
+  height: 40px;
+  background-color: #8acaca;
+  color: white;
+  font-size: 16px;
+}
+.player-name-form{
+  margin-top: 150px;  
+}
+.red{
+  color: red;
+  font-weight: bolder;
+}
+.green{
+  color: green;
+  font-weight: bolder;
+}
+
+@media only screen and (max-width:460px){
+  body{
+    padding-top: 20%;
+  }
+  .rowStyle{
+    display: flex
+  }
+  .squareStyle{
+    width:70px;
+    height:70px;
+    background-color: #ddd;
+    margin: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: white
+  }
+  
+  .boardStyle {
+    background-color: #eee;
+    width: 300px;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border: 3px #eee solid
+  }
+  
+  .containerStyle {
+    display: flex;
+    align-items: center;
+    flex-direction: column
+  }
+  
+  .instructionsStyle{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
+  }  
+  .buttonStyle{
+    margin-top: 15px;
+    margin-bottom: 16px;
+    width: 80px;
+    height: 40px;
+    background-color: #8acaca;
+    color: white;
+    font-size: 16px;
+  }
+  .red{
+    color: red;
+    font-weight: bolder;
+  }
+  .green{
+    color: green;
+    font-weight: bolder;
+  } 
+}
+
+@media only screen and (min-width:461px) and (max-width:768px){
+  body{
+    padding-top: 10%;
+  }
+  .rowStyle{
+    display: flex
+  }
+  .squareStyle{
+    width:100px;
+    height:100px;
+    background-color: #ddd;
+    margin: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white
+  }
+  
+  .boardStyle {
+    background-color: #eee;
+    width: 400px;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border: 3px #eee solid
+  }
+  
+  .containerStyle {
+    display: flex;
+    align-items: center;
+    flex-direction: column
+  }
+  
+  .instructionsStyle{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .buttonStyle{
+    margin-top: 15px;
+    margin-bottom: 16px;
+    width: 80px;
+    height: 40px;
+    background-color: #8acaca;
+    color: white;
+    font-size: 16px;
+  }
+  .player-name-form{
+    margin-top: 100px;
+    width: 50%;
+    margin-left: 25%;
+  }
+  .red{
+    color: red;
+    font-weight: bolder;
+  }
+  .green{
+    color: green;
+    font-weight: bolder;
+  } 
+}
+@media only screen and (min-width:992px){
+  .player-name-form{
+    margin-top: 100px;
+  font-size: 30px;
+  }
+  
+}
