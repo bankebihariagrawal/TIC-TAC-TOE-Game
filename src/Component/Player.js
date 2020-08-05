@@ -16,8 +16,13 @@ const Player = (props) => {
     }
     const handleSubmit= (e) => {
         if(name.Player2 === name.Player1){
-            alert('Please Write 2 different name')
+            return alert('Please Write 2 different name')
         }
+        setName({
+            ...name,
+            Player1: name.Player1.trim(),
+            Player2: name.Player2.trim()
+        })
         e.preventDefault()
         props.addusers(name)
         setTimeout(() => {
@@ -28,7 +33,7 @@ const Player = (props) => {
     
   
     return (
-        <React.Fragment>
+        <div className="bg-1">
             <form className="player-name-form  text-center"  onSubmit={handleSubmit}>
                 <div className="form-group text-center">
                     <label htmlFor="Player1">Player 1 Name</label><br />
@@ -41,7 +46,7 @@ const Player = (props) => {
                 <br />
                 <button type="submit" className="btn btn-primary text-center">Start Game</button>
             </form>
-        </React.Fragment>
+        </div>
     );
 }
  

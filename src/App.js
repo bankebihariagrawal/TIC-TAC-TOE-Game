@@ -2,17 +2,21 @@ import React , {useState} from 'react';
 import Board from './Component/game';
 import {BrowserRouter , Route, Redirect} from 'react-router-dom';
 import Player from './Component/Player';
+// import { BoxLoading } from 'react-loadingg';
 
 function App() {
+
   const [users , setusers] = useState({
-    Player1:'Sagar',
-    Player2:'Yogesh'
+    Player1:'',
+    Player2:''
   })
   const addusers = (user) => {
     setusers({
       user
     })
   }
+
+
   return (
     <BrowserRouter>
     <div className="App">

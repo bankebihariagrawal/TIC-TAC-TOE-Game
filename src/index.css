@@ -1,7 +1,10 @@
-body{
-  
+body{ 
   padding-top: 20px;
+  background: url('https://previews.123rf.com/images/maciejbledowski/maciejbledowski1810/maciejbledowski181000108/109626108-close-up-picture-of-tic-tac-toe-game-noughts-and-crosses-on-dark-background-selective-focus-.jpg');
+  background-size: cover;
+ 
 }
+
 .rowStyle{
   display: flex
 }
@@ -42,7 +45,7 @@ Link{
 .instructionsStyle{
   margin-top: 5px;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 25px;
 }
 
@@ -59,11 +62,11 @@ Link{
   margin-top: 150px;  
 }
 .red{
-  color: red;
+  color: darkblue;
   font-weight: bolder;
 }
 .green{
-  color: green;
+  color: red;
   font-weight: bolder;
 }
 

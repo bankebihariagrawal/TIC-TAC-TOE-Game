@@ -2,9 +2,9 @@
   "name": "tic-tac-toe",
   "version": "0.1.0",
   "private": true,
-  "engines":{
-    "node":"14.3.0",
-    "npm":"6.14.5"
+  "engines": {
+    "node": "14.3.0",
+    "npm": "6.14.5"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-loading": "^2.0.3",
+    "react-loadingg": "^1.7.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "reactstrap": "^8.5.1"

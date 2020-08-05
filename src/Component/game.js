@@ -1,8 +1,7 @@
 import React from 'react';
-import {  Link } from "react-router-dom";
+import { Redirect ,   Link } from "react-router-dom";
 import { Button , Modal , ModalBody , ModalHeader,
   ModalFooter} from 'reactstrap';
-import Player from './Player';
 // class Square extends React.Component {
 //   render() {
 //     return (
@@ -16,10 +15,12 @@ import Player from './Player';
 
   
 class Board extends React.Component {
-  Player2 = this.props.user.user.Player2 ||this.props.user.Player2
-  Player1 = this.props.user.user.Player1 ||this.props.user.Player1
-  
+      
 reset = () => {
+  
+  // Player1 = this.props.user.user.Player1
+  // Player2 = this.props.user.user.Player2
+  
   document.querySelector('.s1').innerHTML=""
   document.querySelector('.s2').innerHTML=""
   document.querySelector('.s3').innerHTML=""
@@ -29,7 +30,7 @@ reset = () => {
   document.querySelector('.s7').innerHTML=""
   document.querySelector('.s8').innerHTML=""
   document.querySelector('.s9').innerHTML=""
-  document.querySelector('.status').innerHTML = `Next Chance: ${this.Player1}`
+  document.querySelector('.status').innerHTML = `Next Chance: ${this.props.user.user.Player1} (X)`
   document.querySelector('.winner').innerHTML = "Winner: None"
   }
 handleDraw = () => {
@@ -42,26 +43,30 @@ handleDraw = () => {
     (document.querySelector('.s7').innerHTML==="X" || document.querySelector('.s7').innerHTML==="O") &&
     (document.querySelector('.s8').innerHTML==="X" || document.querySelector('.s8').innerHTML==="O") &&
     (document.querySelector('.s9').innerHTML==="X" || document.querySelector('.s9').innerHTML==="O")){
-    alert('Oh! This game has no winner. Please Reset the game.')
-    }
+  this.toggleModal1()
+     }
   }
 handleClick = (e) => {    
-    if(document.querySelector('.status').innerHTML === `Next Chance: ${this.Player1}` && (!e.target.innerHTML)){
+ const  audioEl = document.getElementsByClassName("audio-element")[0]
+
+    if(document.querySelector('.status').innerHTML === `Next Chance: ${this.props.user.user.Player1} (X)` && (!e.target.innerHTML)){
     e.target.innerHTML = 'X'
     if(e.target.innerHTML = 'X'){
+      audioEl.play()  
     e.target.classList.add('red')
     e.target.classList.remove('green')   
     }
-    document.querySelector('.status').innerHTML = `Next Chance: ${this.Player2}`
+    document.querySelector('.status').innerHTML = `Next Chance: ${this.props.user.user.Player2} (O)`
     }
     else{
       if(!e.target.innerHTML){
     e.target.innerHTML = 'O'
     if(e.target.innerHTML = 'O'){
+      audioEl.play()  
       e.target.classList.add('green')
       e.target.classList.remove('red')   
       }
-    document.querySelector('.status').innerHTML = `Next Chance: ${this.Player1}`
+    document.querySelector('.status').innerHTML = `Next Chance: ${this.props.user.user.Player1} (X)`
     }
     }
     this.CheckWinner()
@@ -76,7 +81,6 @@ handleWinner = (name) => {
     winner : name
   })
    this.toggleModal()
-   this.reset()
   }
 CheckWinner = (e) => {
   const lines = [
@@ -94,12 +98,12 @@ CheckWinner = (e) => {
       if(document.querySelector('.s'+a).innerHTML === document.querySelector(".s"+b).innerHTML && document.querySelector(".s"+a).innerHTML && document.querySelector(".s"+a).innerHTML === document.querySelector(".s"+c).innerHTML){
       if(document.querySelector(".s"+a).innerHTML === "X"){
         setTimeout(() => {
-          this.handleWinner(this.Player1)  
+          this.handleWinner(this.props.user.user.Player1 + " (X)" )  
         }, 100);
       }
       else{
         setTimeout(() => {
-          this.handleWinner(this.Player2)  
+          this.handleWinner(this.props.user.user.Player2 + " (O)")  
         }, 100);
       }
       break
@@ -113,34 +117,62 @@ CheckWinner = (e) => {
 
 constructor(props) {
   super(props);
-  
-this.state = {
+  this.state = {
     isModalOpen:false,
     winner:null,
-    isModalOpen1:true
+    isModalOpen1:false
   };
   this.toggleModal = this.toggleModal.bind(this);
+  this.toggleModal1 = this.toggleModal1.bind(this);
+  this.toggleModal2 = this.toggleModal2.bind(this);
+  this.toggleModal3 = this.toggleModal3.bind(this)
 }
 toggleModal(){
   this.setState({
       isModalOpen : !this.state.isModalOpen
   })
+  // this.reset()
+}
+toggleModal1(){
+  this.setState({
+      isModalOpen1 : !this.state.isModalOpen1
+  })
+}
+
+
+toggleModal2(){
+  this.setState({
+      isModalOpen : !this.state.isModalOpen
+  })
+  this.reset()
+}
+
+
+toggleModal3(){
+  this.setState({
+      isModalOpen1 : !this.state.isModalOpen1
+  })
+  this.reset()
 }
 
 render() {
-    // return <Redirect to='/' />
-  // }
-console.log(this.props , this.Player2 , this.Player1)
+  if(this.props.user.Player1 == ""){
+    alert('Please set the players name')
+    return <Redirect to='/' />
+  }
 return(
-
         <div className="gameBoard containerStyle">
-        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+        <audio className="audio-element">
+          <source src="https://www.fesliyanstudios.com/play-mp3/5"></source>
+          {/* <source src="https://www.fesliyanstudios.com/play-mp3/387"></source> */}
+        </audio>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} backdrop="static" keyboard={false}>
                     <ModalHeader>Winner</ModalHeader>
                     <ModalBody>
                      {this.state.winner} Won the game
                    </ModalBody>
                    <ModalFooter>
-                     <Button onClick={this.toggleModal}>Restart the game</Button>
+                     <Button onClick={this.toggleModal2}>Restart the game</Button>
                      <Link to="/">
                       <Button>Go Back To Home</Button>
                      </Link>
@@ -148,7 +180,22 @@ return(
                    </ModalFooter>
         </Modal>
         
-        <div className="status instructionsStyle">Next Chance: {this.Player1}</div>
+        <Modal isOpen={this.state.isModalOpen1} toggle={this.toggleModal1} backdrop="static" keyboard={false}>
+                    <ModalHeader>Draw</ModalHeader>
+                    <ModalBody>
+                    Well Played {this.props.user.user.Player1} and {this.props.user.user.Player2} .This Game has No winner
+                   </ModalBody>
+                   <ModalFooter>
+                     <Button onClick={this.toggleModal3}>Restart the game</Button>
+                     <Link to="/">
+                      <Button>Go Back To Home</Button>
+                     </Link>
+                     
+                   </ModalFooter>
+        </Modal>
+        
+
+        <div className="status instructionsStyle">Next Chance: {this.props.user.user.Player1} (X)</div>
         <div className="winner instructionsStyle">Winner: None</div>
         <button className="buttonStyle" onClick={this.reset}>Reset</button>
         <div className="boardStyle">
