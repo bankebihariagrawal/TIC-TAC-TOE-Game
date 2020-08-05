@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
-import { useHistory } from "react-router-dom";
-
+import { useHistory} from "react-router-dom";
+  
 const Player = (props) => {
     let history = useHistory();
     const InitialState = {
@@ -11,17 +11,22 @@ const Player = (props) => {
         e.preventDefault()
         setName({
             ...name,
-            [e.target.id] : e.target.value
+            [e.target.id] : e.target.value.toUpperCase()
         })
     }
     const handleSubmit= (e) => {
+        if(name.Player2 === name.Player1){
+            alert('Please Write 2 different name')
+        }
         e.preventDefault()
         props.addusers(name)
         setTimeout(() => {
         history.push('/game')
-        }, 100);
+    }, 100);
     }
     const [name , setName] = useState(InitialState)
+    
+  
     return (
         <React.Fragment>
             <form className="player-name-form  text-center"  onSubmit={handleSubmit}>
@@ -41,3 +46,4 @@ const Player = (props) => {
 }
  
 export default Player;
+

@@ -5,8 +5,8 @@ import Player from './Component/Player';
 
 function App() {
   const [users , setusers] = useState({
-    Player1:'',
-    Player2:''
+    Player1:'Sagar',
+    Player2:'Yogesh'
   })
   const addusers = (user) => {
     setusers({

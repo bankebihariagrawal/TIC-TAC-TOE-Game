@@ -1,6 +1,8 @@
 import React from 'react';
-import { Redirect } from "react-router-dom";
-
+import {  Link } from "react-router-dom";
+import { Button , Modal , ModalBody , ModalHeader,
+  ModalFooter} from 'reactstrap';
+import Player from './Player';
 // class Square extends React.Component {
 //   render() {
 //     return (
@@ -13,23 +15,25 @@ import { Redirect } from "react-router-dom";
 // }
 
   
-
 class Board extends React.Component {
-  reset = (e) => {
-    document.querySelector('.s1').innerHTML=""
-    document.querySelector('.s2').innerHTML=""
-    document.querySelector('.s3').innerHTML=""
-    document.querySelector('.s4').innerHTML=""
-    document.querySelector('.s5').innerHTML=""
-    document.querySelector('.s6').innerHTML=""
-    document.querySelector('.s7').innerHTML=""
-    document.querySelector('.s8').innerHTML=""
-    document.querySelector('.s9').innerHTML=""
-    document.querySelector('.status').innerHTML = `Next Chance: ${this.props.user.user.Player1}`
-    document.querySelector('.winner').innerHTML = "Winner: None"
+  Player2 = this.props.user.user.Player2 ||this.props.user.Player2
+  Player1 = this.props.user.user.Player1 ||this.props.user.Player1
+  
+reset = () => {
+  document.querySelector('.s1').innerHTML=""
+  document.querySelector('.s2').innerHTML=""
+  document.querySelector('.s3').innerHTML=""
+  document.querySelector('.s4').innerHTML=""
+  document.querySelector('.s5').innerHTML=""
+  document.querySelector('.s6').innerHTML=""
+  document.querySelector('.s7').innerHTML=""
+  document.querySelector('.s8').innerHTML=""
+  document.querySelector('.s9').innerHTML=""
+  document.querySelector('.status').innerHTML = `Next Chance: ${this.Player1}`
+  document.querySelector('.winner').innerHTML = "Winner: None"
   }
-  handleDraw = () => {
- if((document.querySelector('.s1').innerHTML==="X" || document.querySelector('.s1').innerHTML==="O") &&
+handleDraw = () => {
+  if((document.querySelector('.s1').innerHTML==="X" || document.querySelector('.s1').innerHTML==="O") &&
     (document.querySelector('.s2').innerHTML==="X" || document.querySelector('.s2').innerHTML==="O") &&
     (document.querySelector('.s3').innerHTML==="X" || document.querySelector('.s3').innerHTML==="O") &&
     (document.querySelector('.s4').innerHTML==="X" || document.querySelector('.s4').innerHTML==="O") &&
@@ -41,16 +45,14 @@ class Board extends React.Component {
     alert('Oh! This game has no winner. Please Reset the game.')
     }
   }
-  handleClick = (e) => {
-    
-    if(document.querySelector('.status').innerHTML === `Next Chance: ${this.props.user.user.Player1}` && (!e.target.innerHTML)){
+handleClick = (e) => {    
+    if(document.querySelector('.status').innerHTML === `Next Chance: ${this.Player1}` && (!e.target.innerHTML)){
     e.target.innerHTML = 'X'
     if(e.target.innerHTML = 'X'){
     e.target.classList.add('red')
     e.target.classList.remove('green')   
     }
-    // add ="Red"
-    document.querySelector('.status').innerHTML = `Next Chance: ${this.props.user.user.Player2}`
+    document.querySelector('.status').innerHTML = `Next Chance: ${this.Player2}`
     }
     else{
       if(!e.target.innerHTML){
@@ -59,7 +61,7 @@ class Board extends React.Component {
       e.target.classList.add('green')
       e.target.classList.remove('red')   
       }
-    document.querySelector('.status').innerHTML = `Next Chance: ${this.props.user.user.Player1}`
+    document.querySelector('.status').innerHTML = `Next Chance: ${this.Player1}`
     }
     }
     this.CheckWinner()
@@ -68,9 +70,13 @@ class Board extends React.Component {
   },100)
   }
 
-  handleWinner = (name) => {
-  alert('Winner ' + name)
-  return this.reset()
+handleWinner = (name) => {
+  this.setState({
+    ...this.state , 
+    winner : name
+  })
+   this.toggleModal()
+   this.reset()
   }
 CheckWinner = (e) => {
   const lines = [
@@ -86,16 +92,14 @@ CheckWinner = (e) => {
   for(let i=0 ; i<lines.length ; i++) {
     const [a,b,c] = lines[i];
       if(document.querySelector('.s'+a).innerHTML === document.querySelector(".s"+b).innerHTML && document.querySelector(".s"+a).innerHTML && document.querySelector(".s"+a).innerHTML === document.querySelector(".s"+c).innerHTML){
-      // document.querySelector('.winner').innerHTML = "Winner:" + document.querySelector(".s"+a).innerHTML
       if(document.querySelector(".s"+a).innerHTML === "X"){
         setTimeout(() => {
-          this.handleWinner(this.props.user.user.Player1)  
+          this.handleWinner(this.Player1)  
         }, 100);
-        // document.querySelector('.winner').innerHTML = "Winner:" +   this.props.user.Player1
       }
       else{
         setTimeout(() => {
-          this.handleWinner(this.props.user.user.Player2)  
+          this.handleWinner(this.Player2)  
         }, 100);
       }
       break
@@ -106,18 +110,45 @@ CheckWinner = (e) => {
     }
   }
 }
-  render() {
-    // this.componentDidMount()
-    // console.log(!this.props.user.Play  er1 || !this.props.user.user.Player1)
-    if(this.props.user.Player1 === ""){
-      alert('Please Set the name')
-      return <Redirect to='/' />
-    }
-    
 
+constructor(props) {
+  super(props);
+  
+this.state = {
+    isModalOpen:false,
+    winner:null,
+    isModalOpen1:true
+  };
+  this.toggleModal = this.toggleModal.bind(this);
+}
+toggleModal(){
+  this.setState({
+      isModalOpen : !this.state.isModalOpen
+  })
+}
+
+render() {
+    // return <Redirect to='/' />
+  // }
+console.log(this.props , this.Player2 , this.Player1)
 return(
-<div className="gameBoard containerStyle">
-        <div className="status instructionsStyle">Next Chance: {this.props.user.user.Player1}</div>
+
+        <div className="gameBoard containerStyle">
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader>Winner</ModalHeader>
+                    <ModalBody>
+                     {this.state.winner} Won the game
+                   </ModalBody>
+                   <ModalFooter>
+                     <Button onClick={this.toggleModal}>Restart the game</Button>
+                     <Link to="/">
+                      <Button>Go Back To Home</Button>
+                     </Link>
+                     
+                   </ModalFooter>
+        </Modal>
+        
+        <div className="status instructionsStyle">Next Chance: {this.Player1}</div>
         <div className="winner instructionsStyle">Winner: None</div>
         <button className="buttonStyle" onClick={this.reset}>Reset</button>
         <div className="boardStyle">
